@@ -1,0 +1,24 @@
+version: "3.3"
+
+services:
+  web:
+    build: .
+    ports:
+      - "127.0.0.1:5001:5000"
+    volumes:
+      - ./static/photos:/app/static/photos
+    environment:
+      - ADMIN_USERNAME=${ADMIN_USERNAME}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - FACEBOOK_URL=${FACEBOOK_URL}
+      - INSTAGRAM_URL=${INSTAGRAM_URL}
+      - X_URL=${X_URL}
+      - LINKEDIN_URL=${LINKEDIN_URL}
+      - TELEGRAM_URL=${TELEGRAM_URL}
+      - DISCORD_URL=${DISCORD_URL}
+      - BEHANCE_URL=${BEHANCE_URL}
+      - YOUTUBE_URL=${YOUTUBE_URL}
+      - PINTEREST_URL=${PINTEREST_URL}
+      - TITTLE=${TITTLE}
+      - ABOUT_ME=${ABOUT_ME}
+    restart: always

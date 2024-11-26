@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="Accept-CH" content="DPR, Width, Viewport-Width" />
+        <title>{{ tittle }}</title>
+        <link
+            rel="icon"
+            href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📷</text></svg>"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Varela:wght@300;400;500;600&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/styles.css') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"
+        >
+    </head>
+    <body>
+        <header>
+            <div class="logo">📷 {{ tittle }}</div>
+            <nav>
+                <a href="#" class="active" data-section="gallery">Gallery</a>
+                <a href="#" data-section="about">About Me</a>
+                <button id="theme-toggle">
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
+                </button>
+            </nav>
+        </header>
+
+        <main>
+            <section id="gallery" class="active">
+                <div class="masonry-grid"></div>
+            </section>
+            <section id="about" class="hidden">
+                <h2>About Me</h2>
+                {% for paragraph in about_me %}
+                <p>{{ paragraph }}</p>
+                {% endfor %}
+            </section>
+        </main>
+
+        <div class="social-links">
+            {% for social in social_links %}
+            <a href="{{ social.url }}" target="_blank" rel="noopener noreferrer">
+                <i class="fab {{ social.icon }}"></i>
+            </a>
+            {% endfor %}
+        </div>
+
+        <footer>
+            <p>© 2024 Designed and Developed by <a style="color: inherit;" href="https://github.com/S4kur4/">s4kur4</a>.</p>
+        </footer>
+
+        <div id="lightbox" class="hidden">
+            <span class="close">&times;</span>
+            <img id="lightbox-image" src="" alt="Fullsize image" />
+        </div>
+
+        <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    </body>
+</html>
