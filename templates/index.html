@@ -24,7 +24,30 @@
         <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"
-        >
+        />
+        <!-- Google Analytics -->
+        {% if google_analytics_id %}
+        <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id={{ google_analytics_id }}"
+        ></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+            gtag("config", "{{ google_analytics_id }}");
+        </script>
+        <!-- Umami -->
+        {% endif %} {% if umami_website_id %}
+        <script
+            async
+            defer
+            data-website-id="{{ umami_website_id }}"
+            src="https://cloud.umami.is/script.js"
+        ></script>
+        {% endif %}
     </head>
     <body>
         <header>
@@ -53,14 +76,23 @@
 
         <div class="social-links">
             {% for social in social_links %}
-            <a href="{{ social.url }}" target="_blank" rel="noopener noreferrer">
+            <a
+                href="{{ social.url }}"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
                 <i class="fab {{ social.icon }}"></i>
             </a>
             {% endfor %}
         </div>
 
         <footer>
-            <p>© 2024 Designed and Developed by <a style="color: inherit;" href="https://github.com/S4kur4/">s4kur4</a>.</p>
+            <p>
+                © 2024 Designed and Developed by
+                <a style="color: inherit" href="https://github.com/S4kur4/"
+                    >s4kur4</a
+                >.
+            </p>
         </footer>
 
         <div id="lightbox" class="hidden">

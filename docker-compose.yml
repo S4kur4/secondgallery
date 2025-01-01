@@ -21,4 +21,6 @@ services:
       - PINTEREST_URL=${PINTEREST_URL}
       - TITTLE=${TITTLE}
       - ABOUT_ME=${ABOUT_ME}
+      - GOOGLE_ANALYTICS_ID=${GOOGLE_ANALYTICS_ID}
+      - UMAMI_WEBSITE_ID=${UMAMI_WEBSITE_ID}
     restart: always

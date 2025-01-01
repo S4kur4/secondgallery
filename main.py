@@ -76,7 +76,9 @@ def index():
                 'url': url
             })
     about_me = json.loads(os.environ.get('ABOUT_ME'))
-    return render_template('index.html', tittle=tittle, social_links=social_links, about_me=about_me)
+    google_analytics_id = os.environ.get('GOOGLE_ANALYTICS_ID')
+    umami_website_id = os.environ.get('UMAMI_WEBSITE_ID')
+    return render_template('index.html', tittle=tittle, social_links=social_links, about_me=about_me, google_analytics_id=google_analytics_id, umami_website_id=umami_website_id)
 
 
 @app.route('/login', methods=['GET', 'POST'])

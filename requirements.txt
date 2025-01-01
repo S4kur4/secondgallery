@@ -2,4 +2,3 @@ Flask
 Werkzeug
 gunicorn
 Pillow
-captcha
