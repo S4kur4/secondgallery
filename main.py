@@ -7,6 +7,8 @@ import secrets
 from functools import wraps
 from PIL import Image
 import io
+import hashlib
+import requests
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
@@ -15,6 +17,16 @@ app.config['PHOTO_FOLDER'] = os.path.join(app.static_folder, 'photos')
 
 USERNAME = os.environ.get('ADMIN_USERNAME')
 PASSWORD = os.environ.get('ADMIN_PASSWORD')
+TURNSTILE_SITE_KEY = os.environ.get('TURNSTILE_SITE_KEY')
+TURNSTILE_SECRET_KEY = os.environ.get('TURNSTILE_SECRET_KEY')
+
+def verify_turnstile(token):
+     data = {
+         "secret": TURNSTILE_SECRET_KEY,
+         "response": token
+     }
+     response = requests.post("https://challenges.cloudflare.com/turnstile/v0/siteverify", data=data)
+     return response.json()["success"]
 
 
 def login_required(f):
@@ -84,12 +96,27 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        if request.form['username'] == USERNAME and request.form['password'] == PASSWORD:
+        if TURNSTILE_SITE_KEY and TURNSTILE_SECRET_KEY:
+            turnstile_response = request.form.get('cf-turnstile-response')
+            if not turnstile_response:
+                return render_template('login.html',
+                                    error='Please complete the Turnstile challenge',
+                                    turnstile_site_key=TURNSTILE_SITE_KEY)
+
+            if not verify_turnstile(turnstile_response):
+                return render_template('login.html',
+                                    error='Turnstile verification failed',
+                                    turnstile_site_key=TURNSTILE_SITE_KEY)
+
+        if (request.form['username'] == USERNAME and
+            hashlib.sha256(request.form['password'].encode()).hexdigest() == PASSWORD):
             session['logged_in'] = True
             return redirect(url_for('manage'))
         else:
-            return render_template('login.html', error='Invalid credentials')
-    return render_template('login.html')
+            return render_template('login.html',
+                                error='Invalid credentials',
+                                turnstile_site_key=TURNSTILE_SITE_KEY)
+    return render_template('login.html', turnstile_site_key=TURNSTILE_SITE_KEY)
 
 
 @app.route('/logout')
@@ -167,9 +194,9 @@ def upload_photo():
 
 
 def allowed_file(filename):
-    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
