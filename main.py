@@ -54,6 +54,10 @@ def index():
             'env_key': 'X_URL'
         },
         {
+            'icon': 'fa-weibo',
+            'env_key': 'WEIBO_URL'
+        },
+        {
             'icon': 'fa-linkedin-in',
             'env_key': 'LINKEDIN_URL'
         },
