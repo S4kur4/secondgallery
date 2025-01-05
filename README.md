@@ -30,7 +30,7 @@ A clean, lightweight, self-hosted photo gallery designed for tech-savvy photogra
 3. Modify `.env` to add your personal configuration
 
 ```
-# (Optinal) Your social media links
+# (Optional) Your social media links
 FACEBOOK_URL=https://facebook.com
 INSTAGRAM_URL=http://instagram.com
 X_URL=http://x.com
@@ -43,12 +43,12 @@ PINTEREST_URL=
 GITHUB_URL=
 ```
 ```
-# (Optinal) Google Analytics ID or Umami ID
+# (Optional) Google Analytics ID or Umami ID
 GOOGLE_ANALYTICS_ID=
 UMAMI_WEBSITE_ID=
 ```
 ```
-# (Optinal) Cloudflare Turnstile key to protect login form
+# (Optional) Cloudflare Turnstile key to protect login form
 TURNSTILE_SITE_KEY=
 TURNSTILE_SECRET_KEY=
 ```
