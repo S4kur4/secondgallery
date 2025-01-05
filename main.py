@@ -76,6 +76,10 @@ def index():
         {
             'icon': 'fa-pinterest',
             'env_key': 'PINTEREST_URL'
+        },
+        {
+            'icon': 'fa-github',
+            'env_key': 'GITHUB_URL'
         }
     ]
     tittle = os.environ.get('TITTLE')

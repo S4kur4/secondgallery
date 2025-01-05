@@ -40,6 +40,7 @@ DISCORD_URL=
 BEHANCE_URL=https://www.behance.net
 YOUTUBE_URL=https://youtube.com
 PINTEREST_URL=
+GITHUB_URL=
 ```
 ```
 # Google Analytics ID or Umami ID
