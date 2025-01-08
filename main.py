@@ -1,14 +1,17 @@
-from flask import Flask, render_template, jsonify, send_from_directory, request, redirect, url_for, session
 import os
 import random
 import uuid
 import json
 import secrets
-from functools import wraps
-from PIL import Image
 import io
 import hashlib
 import requests
+from functools import wraps
+from PIL import Image
+from datetime import datetime
+from urllib.parse import urljoin
+from flask import make_response
+from flask import Flask, render_template, jsonify, send_from_directory, request, redirect, url_for, session
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
@@ -36,6 +39,67 @@ def login_required(f):
             return redirect(url_for('login', next=request.url))
         return f(*args, **kwargs)
     return decorated_function
+
+
+@app.route('/sitemap.xml')
+def sitemap():
+    """Generate sitemap.xml"""
+    pages = []
+    base_url = request.url_root.rstrip('/')
+
+    pages.append({
+        'loc': base_url,
+        'lastmod': datetime.now().strftime('%Y-%m-%d'),
+        'changefreq': 'daily',
+        'priority': '1.0'
+    })
+
+    pages.append({
+            'loc': urljoin(base_url, '#about'),
+            'lastmod': datetime.now().strftime('%Y-%m-%d'),
+            'changefreq': 'monthly',
+            'priority': '0.8'
+    })
+
+    xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+
+    for page in pages:
+        xml += '  <url>\n'
+        xml += f'    <loc>{page["loc"]}</loc>\n'
+        xml += f'    <lastmod>{page["lastmod"]}</lastmod>\n'
+        xml += f'    <changefreq>{page["changefreq"]}</changefreq>\n'
+        xml += f'    <priority>{page["priority"]}</priority>\n'
+        xml += '  </url>\n'
+
+    xml += '</urlset>'
+
+    response = make_response(xml)
+    response.headers["Content-Type"] = "application/xml"
+
+    return response
+
+
+@app.route('/robots.txt')
+def robots():
+    """Generate robots.txt"""
+    base_url = request.url_root.rstrip('/')
+
+    robots_txt = f"""User-agent: *
+Allow: /
+Allow: /static/photos/
+Disallow: /login
+Disallow: /manage
+Disallow: /api/
+Disallow: /logout
+
+Sitemap: {base_url}/sitemap.xml
+"""
+
+    response = make_response(robots_txt)
+    response.headers["Content-Type"] = "text/plain"
+
+    return response
 
 
 @app.route('/')
