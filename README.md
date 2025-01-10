@@ -34,6 +34,7 @@ A clean, lightweight, self-hosted photo gallery designed for tech-savvy photogra
 FACEBOOK_URL=https://facebook.com
 INSTAGRAM_URL=http://instagram.com
 X_URL=http://x.com
+WEIBO_URL=
 LINKEDIN_URL=
 TELEGRAM_URL=
 DISCORD_URL=
@@ -86,6 +87,4 @@ Visit `/manage` to login and manage photos, and you can remove or bulk upload yo
 
 I create this project because I'm passionate about photography. If you'd like to support my work and help me dedicate more time to it, please consider supporting on Ko-fi. Thank you for your generosity!
 
-<a href="https://ko-fi.com/s4kur4_" target="_blank">
-    <img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Support me on Ko-fi" style="height:30px;">
-</a>
+<a href='https://ko-fi.com/E1E416MCAU' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
